@@ -1,11 +1,11 @@
 # UofT Course Checker
 
 
-A minimal, hastily-written web app to notify the user when a course spot becomes open.
+A minimal, hastily-written Discord app to notify the user when a course spot becomes open.
 
 ## Requirements
-- Node.js
-- A Discord API Token
+- Node.js (recommended latest stable version)
+- A Discord bot token. If you've never registered an app on Discord before, follow [this guide](https://discord.com/developers/docs/getting-started).
 
 
 ## Installation/Running
