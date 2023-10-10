@@ -13,19 +13,31 @@ const courseSection = request.courseSection;
 
 let availability = 0;
 const client = new Client({ intents: [
-    GatewayIntentBits.DirectMessages
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.GuildMessages
 ]});
 
 // ----------- INIT ----------- //
 
 
 
-client.once(Events.ClientReady, c => {
-    console.log(`Ready! Client logged in as ${c.user.tag}`);
+client.once(Events.ClientReady, client => {
+    console.log(`Ready! Signed in as ${client.user.tag}`);
+    console.log(`Course code: ${request.courseCodeAndTitleProps.courseCode}`);
     setTimeout(getAvailability, requestIntervalMs);
 });
 
-client.login(process.env.DISCORD_TOKEN);
+if (!fs.existsSync('.env')) {
+    fs.writeFileSync('.env', 'DISCORD_TOKEN=(your token here)');
+    throw new Error('No .env file detected. Please go to your .env file and enter the bot\'s token.');
+}
+client.login(process.env.DISCORD_TOKEN)
+.then(() => {
+    console.log(`Succesfully logged in to Discord.`);
+})
+.catch(err => {
+    console.error(`${err}`);
+});
 
 // ----------- FUNCTIONS ----------- //
 
@@ -56,8 +68,10 @@ async function getAvailability() {
                 // assert(typeof sec.maxEnrolment == 'number');
                 // assert(typeof sec.currentEnrolment == 'number');
                 let newAvailability = sec.maxEnrolment - sec.currentEnrolment;
-                if (newAvailability - availability != 0) {
-                    console.log(`[${getDatetimeNow()}] Update detected! (${sec.currentEnrolment} / ${sec.maxEnrolment})`);
+                if (availability < 1) {
+                    console.log(`[${getDatetimeNow()}] Initial capacity (${sec.currentEnrolment} / ${sec.maxEnrolment})`);
+                } else if (newAvailability - availability != 0) {
+                    console.log(`[${getDatetimeNow()}] Update detected (${sec.currentEnrolment} / ${sec.maxEnrolment})`);
                 }
                 if (newAvailability - availability > 0 && availability > 0) {
                     await client.users.send(targetChannel, `Spot opened for ${request.courseCodeAndTitleProps.courseCode}!`);
@@ -69,7 +83,7 @@ async function getAvailability() {
         }
         if (!retryAfterFailure) setTimeout(getAvailability, requestIntervalMs);
     } catch (err) {
-        console.error(err);
+        console.error(`${err}`);
     }
     if (retryAfterFailure) setTimeout(getAvailability, requestIntervalMs);
 }

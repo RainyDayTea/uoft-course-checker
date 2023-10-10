@@ -11,12 +11,13 @@ A minimal, hastily-written Discord app to notify the user when a course spot bec
 ## Installation/Running
 
 1. Clone this repository into your desired directory.
-2. In the repository's root directory, add a `.env` file with the following field:
+2. Within the app root directory, run `npm install` to install dependencies.
+3. In the same directory, add a `.env` file with the following field:
 ```env
 DISCORD_TOKEN=(your token here)
 ```
-3. In the terminal, `cd` to the project directory and run the app with `node index.js`
-4. To run silently in the background, use `node index.js > /dev/null 2>&1 &` . Note that you'll need to kill the program manually later.
+4. In the terminal, `cd` to the project directory and run the app with `node index.js`
+5. To run silently in the background, use `node index.js > /dev/null 2>&1 &` . Note that you'll need to kill the program manually later.
 
 
 ## Configuration
