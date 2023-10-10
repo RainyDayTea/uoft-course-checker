@@ -12,7 +12,7 @@ A minimal, hastily-written Discord app to notify the user when a course spot bec
 
 1. Clone this repository into your desired directory.
 2. Within the app root directory, run `npm install` to install dependencies.
-3. In the same directory, add a `.env` file with the following field:
+3. In the same directory, add a `.env` file with your bot token:
 ```env
 DISCORD_TOKEN=(your token here)
 ```
@@ -26,4 +26,4 @@ All config options are located within `config.json`.
 - `targetChannel`: The ID of the Discord channel the bot will message to.
 - `requestIntervalMs`: The time in milliseconds between POST requests made to the UofT timetable API.
 - `retryAfterFailure`: If true, the app will keep trying to make requests to the timetable after an error occurs.
-- `requestOptions`: Contains various parameters for selecting a specific course. May require some experimentation.
+- `requestOptions`: Contains various parameters for selecting a specific course. Note that it's not known which options are mandatory for the API to give a working response and it may require some experimentation. However, the current parameters seem to be sufficient.
