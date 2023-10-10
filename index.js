@@ -6,12 +6,12 @@ const assert = require('assert/strict');
 const { Client, GatewayIntentBits, Events } = require('discord.js');
 const { requestIntervalMs, 
     targetChannel, 
-    request, 
+    requestOptions, 
     retryAfterFailure
 } = JSON.parse(fs.readFileSync('./config.json'));
-const courseSection = request.courseSection;
+const request = JSON.parse(fs.readFileSync('./request.json'));
 
-let availability = 0;
+let availability = -1;
 const client = new Client({ intents: [
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.GuildMessages
@@ -19,7 +19,7 @@ const client = new Client({ intents: [
 
 // ----------- INIT ----------- //
 
-
+buildRequestObject();
 
 client.once(Events.ClientReady, client => {
     console.log(`Ready! Signed in as ${client.user.tag}`);
@@ -52,6 +52,15 @@ function getDatetimeNow() {
     return `${year}/${day}/${month} ${hours}:${minutes}:${seconds}`;
 }
 
+function buildRequestObject() {
+    request.courseCodeAndTitleProps.courseCode = requestOptions.courseCode;
+    request.courseCodeAndTitleProps.courseSectionCode = requestOptions.courseSectionCode;
+    request.courseSection = requestOptions.courseSubsection;
+    request.sessions = requestOptions.sessions;
+    request.divisions = requestOptions.divisions;
+    console.log('Request object built successfully.');
+}
+
 async function getAvailability() {
     try {
         console.log(`[${getDatetimeNow()}] Querying timetable...`);
@@ -64,11 +73,11 @@ async function getAvailability() {
         assert(data.payload.pageableCourse.total == 1);
         let sections = data.payload.pageableCourse.courses[0].sections;
         for (const sec of sections) {
-            if (sec.name == courseSection) {
+            if (sec.name == request.courseSection) {
                 // assert(typeof sec.maxEnrolment == 'number');
                 // assert(typeof sec.currentEnrolment == 'number');
                 let newAvailability = sec.maxEnrolment - sec.currentEnrolment;
-                if (availability < 1) {
+                if (availability < 0) {
                     console.log(`[${getDatetimeNow()}] Initial capacity (${sec.currentEnrolment} / ${sec.maxEnrolment})`);
                 } else if (newAvailability - availability != 0) {
                     console.log(`[${getDatetimeNow()}] Update detected (${sec.currentEnrolment} / ${sec.maxEnrolment})`);

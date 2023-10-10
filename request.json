@@ -1,0 +1,23 @@
+{
+    "courseCodeAndTitleProps": {
+        "courseCode": "",
+        "courseTitle": "",
+        "courseSectionCode": "",
+        "searchCourseDescription": false
+    },
+    "courseSection": "",
+    "departmentProps": [],
+    "campuses": [],
+    "sessions": [],
+    "requirementProps": [],
+    "instructor": "",
+    "courseLevels": [],
+    "deliveryModes": [],
+    "dayPreferences": [],
+    "timePreferences": [],
+    "divisions": [],
+    "creditWeights": [],
+    "page": 1,
+    "pageSize": 1,
+    "direction": "asc"
+}

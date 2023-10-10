@@ -26,4 +26,4 @@ All config options are located within `config.json`.
 - `targetChannel`: The ID of the Discord channel the bot will message to.
 - `requestIntervalMs`: The time in milliseconds between POST requests made to the UofT timetable API.
 - `retryAfterFailure`: If true, the app will keep trying to make requests to the timetable after an error occurs.
-- `request`: This is the raw request template. Feel free to edit the fields however you like.
+- `requestOptions`: Contains various parameters for selecting a specific course. May require some experimentation.

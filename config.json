@@ -2,33 +2,17 @@
     "targetChannel": "221677207406247936",
     "requestIntervalMs": 4000,
     "retryAfterFailure": true,
-    "request" : {
-        "courseCodeAndTitleProps": {
-            "courseCode": "CSC420H1",
-            "courseTitle": "Introduction to Image Understanding",
-            "courseSectionCode": "F",
-            "searchCourseDescription": false
-        },
-        "courseSection": "LEC0101",
-        "departmentProps": [],
-        "campuses": [],
+    "requestOptions" : {
+        "courseCode": "CSC320H1",
+        "courseSectionCode": "",
+        "courseSubsection": "LEC0101",
         "sessions": [
             "20239",
             "20241",
             "20239-20241"
         ],
-        "requirementProps": [],
-        "instructor": "",
-        "courseLevels": [],
-        "deliveryModes": [],
-        "dayPreferences": [],
-        "timePreferences": [],
         "divisions": [
             "ARTSC"
-        ],
-        "creditWeights": [],
-        "page": 1,
-        "pageSize": 20,
-        "direction": "asc"
+        ]
     } 
 }
